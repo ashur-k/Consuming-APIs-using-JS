@@ -1,7 +1,7 @@
-const baseURL = "https://swapi.co/api/";
-function getData(type, cb){
+
+function getData(url, cb){
     var xhr = new XMLHttpRequest(); //inbuild object java allow us to consume API
-    xhr.open ("GET", baseURL + type + "/");
+    xhr.open ("GET", url);
     xhr.send();
 // we are starting a function which checks whenever states open that ready state is 4 and status is 200
 xhr.onreadystatechange = function (){
@@ -29,11 +29,26 @@ function getTableHeaders(obj) {
     return`<tr>${tableHeaders}</tr>`;
 }
 
-function writeToDocument(type) {
+function generatePaginationButtons(next, prev) {
+    if (next && prev) {
+    return `<button onclick="writeToDocument('${prev}')">Previous</button>
+                <button onclick="writeToDocument('${next}')">Next</button>`;
+    } else if (next && !prev) {
+        return  `<button onclick="writeToDocument('${next}')">Next</button>`;
+    } else if (!next && prev){
+            return `<button onclick="writeToDocument('${prev}')">Previous</button>`;
+    }
+}
+
+function writeToDocument(url) {
     var tableRows = [];
     var el = document.getElementById("data");
     el.innerHTML = "";
-    getData(type, function(data){
+    getData(url, function(data){
+        var pagination;
+        if (data.next || data.previous){
+           pagination = generatePaginationButtons(data.next, data.previous)
+        }
         data = data.results;
         var tableHeaders = getTableHeaders(data[0]);
         
@@ -50,7 +65,7 @@ function writeToDocument(type) {
                 
                // el.innerHTML += "<h6>" + item.name + "</h6>";
         });
-            el.innerHTML = `<table>${tableHeaders}${tableRows}</table>`
+            el.innerHTML = `<table>${tableHeaders}${tableRows}</table>${pagination}`;
  
     });
 }
