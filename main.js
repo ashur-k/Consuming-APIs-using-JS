@@ -65,7 +65,7 @@ function writeToDocument(url) {
                 
                // el.innerHTML += "<h6>" + item.name + "</h6>";
         });
-            el.innerHTML = `<table>${tableHeaders}${tableRows}</table>${pagination}`;
+            el.innerHTML = `<table>${tableHeaders}${tableRows}</table>${pagination}`.replace(/,/g, "");
  
     });
 }
