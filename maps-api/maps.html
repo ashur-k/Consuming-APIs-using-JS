@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    #map{
+        border: 2px solid #333;
+        width: 80vw;
+        height: 80vh;
+            }
+    </style>
+</head>
+<body>
+    <h3>I am going to display google map object<h3>
+    <div id="map"></div>
+    <script>
+        let MAPKEY ="AIzaSyDlaQZBO-WosqpnUVqkWyicmiW6rKSP1as";
+        let map;
+
+        document.addEventListener("DOMContentLoaded", ()=>{
+            let s = document.createElement("script");
+            document.head.appendChild(s);
+            s.addEventListener("load", () => {
+                //script has loaded
+                console.log("script has loaded");
+                map = new google.maps.Map(document.getElementById("map"), {
+                    center: {
+                        lat: 45.349711,
+                        lng: -75.7569551
+                    },
+                    zoom: 16,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+            });
+            s.src = `https://maps.googleapis.com/maps/api/js?key=${MAPKEY}`;
+        });
+</script>
+</body>
+</html>
